@@ -1,31 +1,33 @@
-function isPrime(number, { array }) {
+function isPrime(number) {
   const numberMoreThanOne = number != 1;
   if (!numberMoreThanOne) {
-    return;
+    return null;
   }
   
   const sqrt = Math.floor(Math.sqrt(number));
   for(let divideBy = 2; divideBy <= sqrt; divideBy++) {
     if ((number % divideBy) === 0) {
-      return;
+      return null;
     }
   }
 
-  array.push(number);
+  return Number(number);
 }
 
 function findPrimeNumber({ from = 1, to }) {
-  let initialState = from;
   const primes = [];
   while(primes.length < to) {
-    isPrime(initialState, { array: primes })
-    initialState++
+    const primeNumber = isPrime(from)
+    if (primeNumber) {
+      primes.push(primeNumber);
+    }
+    from++
   }
 
   return primes;
 }
 
-const primes = findPrimeNumber({ from: 2, to: 1000 });
+const primes = findPrimeNumber({ from: 1, to: 1000 });
 const sumAllPrimesFound = primes.reduce((acc, current) => acc + current);
 console.log(primes);
 console.log(sumAllPrimesFound);
